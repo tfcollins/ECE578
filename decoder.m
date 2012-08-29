@@ -1,10 +1,9 @@
-fid=fopen('~/Git/ECE578/hw1.txt');
+fid=fopen('R:\git~1\ECE578\hw1.txt');
 txt=fread(fid);
 %remove beginning txt
 txt=txt(298:1968);
 
-
-
+%Count Character Occurrances
 counters=zeros(1,26);
 letters=97:97+25;
 for i=1:length(txt)
@@ -20,7 +19,7 @@ end
 
 
 %custom additions
-counters(int8('n')-96)=counters(int8('n')-96)+4;
+%counters(int8('n')-96)=counters(int8('n')-96)+4;
 
 
 [b,sorted]=sort(counters);

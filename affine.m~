@@ -36,11 +36,11 @@ for b=0:25
     char(txt(1:30))'
     b
     a
-    pause
+    %pause
 end
 end
 
-break
+%break
 %converted txt
 for a=7
 for b=13
@@ -69,7 +69,7 @@ end
 end
 
 txt_file=char(txt);
-%save to file
-fid2 = fopen('~/Git/ECE578/hw1_p1.txt','w');
+%save hw1_p1.txt txt_file /ascii
+fid2 = fopen('hw1_p1.txt','w');
 fprintf(fid2,txt_file);
 

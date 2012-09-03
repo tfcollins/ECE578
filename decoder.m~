@@ -6,15 +6,10 @@ txt=txt(1989:end);
 %Count Character Occurrances
 counters=zeros(1,26);
 letters=97:97+25;
-shift=0;
 for i=1:length(txt)
-    shift=shift+5;
     if txt(i)<97%change to lowercase
         txt(i)=txt(i)+32;
     end
-    temp=txt(i)-97;
-    txt(i)=mod(temp+shift,26)+97;
-    
     for j=1:26
         if txt(i)==letters(j)
             counters(j)=counters(j)+1;
@@ -22,12 +17,12 @@ for i=1:length(txt)
     end
 end
 
-%full=sum(counters);
+full=sum(counters);
 
-%q=counters/full;
+q=counters/full;
 
-%Ij=sum(freq_num.*q')
-%break
+Ij=sum(freq
+
 %custom additions
 %counters(int8('n')-96)=counters(int8('n')-96)+4;
 

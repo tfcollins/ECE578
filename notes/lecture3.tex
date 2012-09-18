@@ -1,0 +1,107 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage{amsmath} % just math
+\usepackage{amssymb} % allow blackboard bold (aka N,R,Q sets)
+\usepackage{ulem}
+\linespread{1.6}  % double spaces lines
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,nohead]{geometry}
+\usepackage{enumerate}
+
+\begin{document}
+
+\linespread{1} % single spaces lines
+\small \normalsize %% dumb, but have to do this for the prev to work
+\begin{flushright}
+Travis Collins \\
+ECE578 Lecture 3 Notes \\
+\today
+\end{flushright}
+
+\underline{RC4  \(Ron's  Cipher 4\)}\\
+-Designed in 1987\\
+-Trade Secret of RSA Corp\\
+-Leaked on sci.crypt \(USENET\) in 1994\\
+-Most widely used stream cipher, SSL/TLS, WEP/WPA\\
+-Key Advantage: Amazingly simple/easy to implement!!\\
+-RC4 works with bytes (8-bits) and not bits\\
+-RC4 State
+\begin{enumerate}\itemsep0.5pt
+\item A 256 byte state table
+\item Two 8-bit indices i, j
+\end{enumerate}
+
+
+\underline{RC4 Key Schedule Algorthim}\\
+-Prepares the state table S using a short key or password\\
+-Key has to be at least 1 byte \[1<=\left|{key}\right|<=256 bytes,key=n\]\\
+
+
+\underline{Algorithm}\\
+for i=0 to 255: S[i]=i\\
+j=0\\
+for i=0 to 255:\\
+	j=(j+S[i]+key[i mod n])mode 256\\
+	swap(S[i],S[j])\\
+
+\underline{Key Stream Generation Algorithm}\\
+-In each iteration we generate a byte of keystream data\\
+-Initially set i=j=0 (Only at beginning of encryption session)\\
+
+\underline{Algorithm}\\
+i=i+1 (mod 256)\\
+j=j+S[i] (mod 256) \\
+swap(S[i],S[j])\\
+return S[ S[i]+S[j] (mod 256)] \\
+
+
+\underline{Block Ciphers}
+-Remember (from stream ciphers) PRNG output string is indistinguishable from a random string for any bounded adversary\\
+
+\textbf{Idea:} What if we can randomize the function itself instead of the output of the function!\\
+-Pseudo Random Function (PRF)\\
+\textbf{Def:} A PRF is a keyed function that is indistinguishable from a function chosen at random using bounded resources\\
+
+\underline{Block Cipher}(Approx. of Pseudo-Random Permutation (PRP))\\
+ is stateless meaning the same message and key in means the same cipher text out \[E_{k}(m)=c D_{k}(E_{k}(m))=m)\]
+
+
+\underline{An Ideal Block Cipher}
+-Assume we fix \[n_{k}=n_{m}=n_{c}=n\]\\
+-What we need is a random function n-bit to n-bit function\\
+\vspace{0.1 mm}
+-Consider first all functions\\
+
+\begin{tabular}{ l | r }
+  \hline                        
+  Message & Cipher \\
+  0 & $2^n$ \\
+  1 & $2^n$ \\
+  ... & ... \\
+  $2^n-1$ & $2^n$ \\
+  \hline  
+\end{tabular}
+
+\[\left|{F}\right|=(2^n)^{2^n} \]\\
+\vspace{0.1 mm}
+-But we want decryption to work so f needs to be one-to-one\\
+
+\begin{tabular}{ l | r }
+  \hline                        
+  Message & Cipher \\
+  0 & $2^n$ \\
+  1 & $2^n-1$ \\
+  ... & ... \\
+  $2^n-1$ & 1 \\
+  \hline  
+\end{tabular}
+
+\[\left|{F}\right|=2^n(2^n-1)(2^n-2)...=(2^n)! \] 
+Still huge space!!\\
+But we also want it to be efficiently computable\\
+
+Can we construct a PRP from a PRF?\\
+- Luby-Rackoff Construction-(Feistel Cipher)\\
+- Look at DES paper\\
+
+
+\end{document}

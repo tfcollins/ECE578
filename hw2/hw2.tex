@@ -1,0 +1,97 @@
+\documentclass[12pt]{article}
+%\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage[margin=1.0in]{geometry}
+\title{HW \#2}
+\author{
+        Travis Collins \\
+	traviscollins@wpi.edu \\
+	ECE 578 Crytography and Data Security
+}
+\date{\today}
+\usepackage{titling}
+\setlength{\droptitle}{-1.0in}
+
+
+\begin{document}
+\maketitle
+
+\section{Question 1: Linear Complexity}
+Note: All answers used Matlab code appended to end of homework.\\
+\textbf{a 0101010101}
+\[ X = \left( \begin{array}{ccc}
+0 & 1 & 0 \\
+1 & 0 & 1 \\
+0 & 1 & 0 \end{array} \right)  rank(X) = 2\] 
+Linear Complexity: m=2\\
+
+\textbf{b 011001100110}
+\[ X = \left( \begin{array}{cccc}
+0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 1 & 0 & 0 \end{array} \right)  rank(X) = 3\] 
+Linear Complexity: m=3\\
+
+\textbf{c 011011011011011}
+\[ X = \left( \begin{array}{cccc}
+0 & 1 & 1 & 0  \\
+1 & 0 & 1 & 1  \\
+1 & 1 & 0 & 1  \\
+0 & 1 & 1 & 0\end{array} \right)  rank(X) = 3\] 
+Linear Complexity: m=3\\
+
+\textbf{d 1011010010110}
+\[ X = \left( \begin{array}{cccccc}
+1 & 0 & 1 & 1 & 0 & 1\\
+0 & 1 & 0 & 1 & 1 & 0\\
+0 & 0 & 1 & 0 & 1 & 1\\
+1 & 0 & 0 & 1 & 0 & 1\\
+0 & 1 & 0 & 0 & 1 & 0\\
+1 & 0 & 1 & 0 & 0 & 1\end{array} \right)  rank(X) = 5\] 
+Linear Complexity: m=5\\
+
+
+\section{Question 2}
+\textbf{A: Degree of stream generator}
+\[m=3\]\\
+
+\textbf{B: Initialization Vector}
+\[ S=[0, 0, 1] \]
+
+\textbf{C: Feedback Coefficients}
+\[ F=\left( \begin{array}{c}
+0\\
+1\\
+1\end{array} \right) \]
+
+\section{Question 3}
+No this does not significantly improve over using single a LFSR.  By XORing two LFSR's together we can at most double their complexity.  For example if we take two LFSR of length 3, with coefficients \[ F1=\left( \begin{array}{c}
+1\\
+0\\
+1\end{array} \right) 
+ F2=\left( \begin{array}{c}
+1\\
+1\\
+1\end{array} \right)\]\\
+
+If they are XORed together, the linear complexity of their output at most is m=6, depending on input.
+
+\section{Question 4}
+\textbf{b: Output}\\
+\[Output=[0 1 0 0 1 1 1 1] \]
+
+\textbf{c: Sequence length}\\
+Yes the condition of the length's being relatively prime is true, and the length of the output sequence is: 
+
+\begin{table}
+    \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+        $Clock$ & $Initial$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+        $LFSR1$ &       1 & 0 & 1 & 1 & 0 & 1 & 1 & 0 & 1 \\ 
+        $LFSR2$ &	1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1  \\
+        $LFSR3$ &	1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\ 
+	$Output$ &      0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+    \end{tabular}
+\end{table}
+
+ 
+\end{document}

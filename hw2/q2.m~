@@ -1,0 +1,52 @@
+x=[1 0 0 1 0 0 1 0 0 1 1 0 1 1 0 1 1 0 0 1 0 0 1 0 0 1 1 0];
+y=[1 0 1 1 1 1 0 0 0 0 1 1 0 0 0 1 0 0 1 0 1 0 1 1 0 0 0 1];
+
+%x=flipdim(x,2);
+x=xor(x,y);
+key_m=flipdim(key(10:17),2);
+%key_m=key(8:14);
+%x=[1 0 1 1 0 1 0 0 1 0 1 1 0];
+for m=2:8
+    X=ones(m,m)*2;
+    X_t=ones(m,1)*2;
+    for j=1:m
+        for i=1:m
+            X(i,j)=x(i+j-1);
+        end
+    end
+    %[X_m;X_m+1..];
+    X_t=x(m+1:m+m)';
+    
+    X=double(flipdim(X,2));
+    disp(['m: ',num2str(m),' Determinate: ',num2str(det(X)),' Rank: ',num2str(rank(X))]);
+    if rank(X)==m
+        F=inv(X)*X_t
+    end
+end
+break
+
+
+%%LFSR
+initial=[0 0 1 0 1 1 1];
+taps=   [1 0 1 0 1 0 1];
+
+for i=1:10
+    initial(1)
+    new=mod(sum(initial.*taps),2);
+    initial(2:length(initial))=initial(1:length(initial)-1);
+    initial(1)=new;
+end
+
+
+
+poly=x^2+x^4+x^5+x^6;
+
+%%7 state lfsr
+%z7c7=z6c6+z5c5+z4c4+z3c3+z2c2+z1c1+z0c0 mod 2
+
+
+%    --+<--+<--+<--+<--+<--+<--
+%   |  |   |   |   |   |   |   |
+%   ->L1->L2->L3->L4->L5->L6->L7->output
+
+%

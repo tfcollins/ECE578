@@ -1,0 +1,124 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage{amsmath} % just math
+\usepackage{amssymb} % allow blackboard bold (aka N,R,Q sets)
+\usepackage{ulem}
+\linespread{1.6}  % double spaces lines
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,nohead]{geometry}
+\usepackage{enumerate}
+
+\begin{document}
+
+\linespread{1} % single spaces lines
+\small \normalsize %% dumb, but have to do this for the prev to work
+\begin{flushright}
+Travis Collins \\
+ECE578 Lecture 5 Notes \\
+\today
+\end{flushright}
+
+\section{Multiple Encryption}
+-Double encryption\\
+Keyspace:\(\left|K\right|=2^k x 2^k=2^{2k}  \)\\
+\[x => encrypt => y => encrypt =y'\]\\
+
+\underline{Meet in the middle attack}\\
+\[ x => encrypt(k(i)) => z => encrypt(k(j)) => y\]
+\[e_{ki}(x)=z_{i}^1  e_{kj}^{-1}(y)=z_{j}^(2)\]
+
+Input: (x',y'),(x",y")\\
+Idea: Compute
+\[z_{i}^1=e_{ki}(x)\]\\
+\[z_{j}^2=e_{kij}^{-1}(y)\]\\
+Problem: Find \(z_{i}^(1)=z_{j}^(2)\)\\
+
+Procedure:\\
+1.) Compute lookup table \((z_{i}^{(1)},k_{i}),i=1,2,...,2^k\)\\
+Storage: \(2^k,(n+k) bits\)\\
+2.) Sort according to \(z_{i}\) column (Done typically while building table in step 1) \\
+
+Values from the first encryption:\\
+\begin{table}
+    \begin{tabular}{|l|l|}
+        $ki$ & $zi(1)$ \\ 
+        0  & 3     \\ 
+        1  & 1     \\ 
+        2  & 6     \\ 
+        3  & 2     \\ 
+        4  & 7     \\ 
+        5  & 10    \\
+    \end{tabular}
+\end{table}
+
+\begin{table}
+    \begin{tabular}{|l|l|}
+        $k$ & $zi(1)$ \\
+        1  & 1     \\ 
+        3  & 2     \\ 
+        0  & 3     \\ 
+        2  & 6     \\ 
+        4  & 7     \\ 
+        5  & 10    \\
+    \end{tabular}
+\end{table}
+
+Use quick sort to look through table\\
+Binary search: \(log2(2^k)=k \) (iterations), k=keylength\\
+
+
+3.) Find matching \(z_{j}^{(2)}\)\\
+a.) Compute \(e_{kj}^{-1}(y^1)=z_{j}^{(2)}\)\\
+b.) If \[z_{j}^{(2)}\] is in lookup table, i.e. \(z_{i}^{(1)}=z_{j}^{(2)} => (k_{i},k_{j}) -> try (x",y")(x''',y''')\)\\
+c.) If \((k_{i},k_{j})\) give matchin encryption return \((k_{i},k_{j})\) else goto 'a' try different \[k_{j}\]\\
+
+
+Complexity:\\
+Brute Force: \(2^{2k}\) encryptions (2x per iteration)\\
+Meet in the middle attack: \(Time = 2^k(Lookup table i_values) + 2^k (online j_values)\)\\
+
+
+Triple encrytion:\\
+Attack on first encryption (1)\\
+\(Time = 2^k+2^{2k}\)\\
+\(Space = 2^k\)\\
+Attack with second encryption (2)\\
+\(Time = 2^{2k}+2^{k}\)\\
+\(Space = 2^{2k}\)\\
+
+
+Question: How many additional pairs (x",y"), (x''',y''').... etc should we test?\\
+
+Assume in general we have an encryption system with 'l' subsequence encryptions\\
+
+Step1.)In step 1 we found a keypair such that \(e_{k}...e_{kj}(e_{ki}(x'))=y' (l encryptions) \)\\
+There are \(2^{lk}\) key combinations\\
+
+How many possible values do I have for the cyphertext y' is \(2^n (n=blocksize)\)\\
+One to one mapping x->y ( \(2^n\) possible outputs), \(2^{lk}/2^n number of mappings per ciphertext \)\\
+Number of keys that are found that are incorrect \(2^{lk}/2^n-1\)\\
+
+Step2.)  We now use the candiadate key from step 1 and check if \(e^l(x")=y"\)\\
+
+If a random key is used, the likelyhood that \(e^l(x")=y"\) is \(1/2^n\)\\ 
+
+If we check a third pair (x''',y'''), under the same random pair the probability will be:\(1/2^{2n}\)\\
+
+If we check (t-1) additional pairs then the probability becomes \( 1/2^{(t-1)n}\)\\
+
+
+3.) Since there are \(2^{lk}/2^n\) candidate keys in 1.) then probability that at least one fullfills all \(e^l(x')=y',e^l(x")=y",...,e^l(x'..')=y'..'\) is \[(Number of bad keys)2^{lk}/2^n*1/2^{(t-1)n}(prob of passing t-1 tests)=2^{lk-tn}\]\\
+
+
+Example: Double encryption with DES\\
+k=56,n=64,l=2\\
+if t=1 (special case), \(Failure 1-1/2^{112}/2^{64}=1-1/2^48\)\\
+if t=2 (special case), \(Failure 1/2^{16}\)\\
+if t=3 (special case), \(Failure 1/2^{80}\)\\
+if t=4 (special case), \(Failure 1/2^{144}\)\\
+
+
+
+
+
+
+\end{document}

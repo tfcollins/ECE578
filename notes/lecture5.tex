@@ -23,16 +23,16 @@ Keyspace:\(\left|K\right|=2^k x 2^k=2^{2k}  \)\\
 \[x => encrypt => y => encrypt =y'\]\\
 
 \underline{Meet in the middle attack}\\
-\[ x => encrypt(k(i)) => z => encrypt(k(j)) => y\]
-\[e_{ki}(x)=z_{i}^1  e_{kj}^{-1}(y)=z_{j}^(2)\]
+\[ x => encrypt(k(i)) => z => encrypt(k(j)) => y\]\\
+\[e_{ki}(x)=z_{i}^1  e_{kj}^{-1}(y)=z_{j}^2\]\\
 
 Input: (x',y'),(x",y")\\
-Idea: Compute
+Idea: Compute\\
 \[z_{i}^1=e_{ki}(x)\]\\
 \[z_{j}^2=e_{kij}^{-1}(y)\]\\
-Problem: Find \(z_{i}^(1)=z_{j}^(2)\)\\
+Problem: Find \(z_{i}^1=z_{j}^2\)\\
 
-Procedure:\\
+{\bf Procedure:}\\
 1.) Compute lookup table \((z_{i}^{(1)},k_{i}),i=1,2,...,2^k\)\\
 Storage: \(2^k,(n+k) bits\)\\
 2.) Sort according to \(z_{i}\) column (Done typically while building table in step 1) \\

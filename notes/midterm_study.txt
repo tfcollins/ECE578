@@ -1,0 +1,32 @@
+578 Midterm Study
+
+Topics to Study:
+
+LFSR's:
+Overview:
+LFSR's are stream ciphers made up of Flip-Flops
+
+
+Possible states: 2^m, m=number of storage elements, excludes all zero state
+	-sequence repeates after 2^m outputs
+
+If the sequence lengths of all LFSRs are relatively prime to each other, then the
+sequence length of the generator is the product of all three sequence lengths L=L1*L2*L3....
+
+A secure generator should have LFSRs of roughly equal lengths and the length should be at least 128
+
+Attacks:
+
+
+
+
+
+
+
+
+Questions to ask:
+
+1.) attacks on LFSR's
+How to go from C's to equation
+or to LFSR
+
